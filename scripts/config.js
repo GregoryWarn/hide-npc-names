@@ -20,6 +20,7 @@ export const DEFAULT_CONFIG = {
     neutralNameReplacement: "Unknown Creature",
     friendlyNameReplacement: "Unknown Creature",
     secretNameReplacement: "Unknown Creature",
+    hideParts: true,
 }
 
 export const FLAGS = {
@@ -35,6 +36,7 @@ export const SETTING_KEYS = {
     hostileNameReplacement: "hostileNameReplacement",
     neutralNameReplacement: "neutralNameReplacement",
     friendlyNameReplacement: "friendlyNameReplacement",
-    secretNameReplacement: "secretNameReplacement"
+    secretNameReplacement: "secretNameReplacement",
+    hideParts: "hideParts"
 }
 

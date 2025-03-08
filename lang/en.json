@@ -28,6 +28,8 @@
     "Settings.HideFriendlyH": "Hide Names of Actors with Token Disposition set to FRIENDLY",
     "Settings.HideSecretN": "Hide Secret Names",
     "Settings.HideSecretH": "Hide Names of Actors with Token Disposition set to SECRET",
+    "Settings.HidePartsN": "Hide Parts",
+    "Settings.HidePartsH": "Hides all parts of the name in chat card text e.g. Ancient Green Dragon will replace all instances and combinations of Ancient, Green, and Dragon",
     "Settings.HostileReplacementN": "Hostile Replacement Name",
     "Settings.HostileReplacementH": "The default name to use when replacing Hostile Actor names",
     "Settings.NeutralReplacementN": "Neutral Replacement Name",

@@ -104,4 +104,33 @@ export class Utils {
     static getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
     }
+
+    /**
+     * Takes an array of terms (eg. name parts) and returns groups of neighbouring terms
+     * @param {*} arr 
+     */
+    static getTerms(arr) {
+        const terms = [];
+        const rejectTerms = ["of", "its", "the", "a", "it's", "if", "in", "for", "on", "by", "and"];
+        for ( let i of arr.keys() ) {
+            let len = arr.length - i;
+            for ( let p=0; p<=i; p++ ) {
+                let part = arr.slice(p, p+len);
+                if (part.length === 1 && rejectTerms.includes(part[0])) {
+                    continue;
+                } 
+                terms.push(part.join(" "));
+            }
+        }
+        return terms;
+    }
+
+    /**
+     * Escapes regex special chars
+     * @param {String} string 
+     * @return {String} escapedString
+     */
+    static escapeRegExp(string) {
+        return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+    }
 }

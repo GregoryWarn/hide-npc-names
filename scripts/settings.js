@@ -43,6 +43,16 @@ export function registerSettings() {
         requiresReload: true
     });
 
+    Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideParts, {
+        name: "Settings.HidePartsN",
+        hint: "Settings.HidePartsH",
+        scope: "world",
+        type: Boolean,
+        default: MODULE_CONFIG.DEFAULT_CONFIG.hideParts,
+        config: true,
+        requiresReload: true
+    });
+
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hostileNameReplacement, {
         name: "Settings.HostileReplacementN",
         hint: "Settings.HostileReplacementH",

@@ -149,8 +149,25 @@ export class HideNPCNames {
 
         if (!shouldReplace) return;
 
+        const hideParts = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS.hideParts);
+        let matchString = null;
+
+        // If there's a space in the name and name parts should be hidden, perform additional manipulation
+        if (name.includes(" ") && hideParts) {
+            const parts = name.trim().split(/\s/).filter(w => w.length);
+            const terms = Utils.getTerms(parts);
+
+            if (terms.length) {
+                // If the first term is not exactly the name provided, use the name instead
+                // this accounts for names with multiple consecutive spaces
+                if (terms[0] !== name) { terms[0] = name; }
+                matchString = terms.map(t => { return Utils.escapeRegExp(t.trim()); }).filter(t => t.length).join("|");
+            }
+        } 
+        
+        matchString = matchString ?? Utils.escapeRegExp(name);
+
         // Escape regex in the match to ensure it is parsed correctly
-        let matchString = name.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
         const regex = `(${matchString})(?=\\s|[\\W]|s\\W|'s\\W|$)`;
         const pattern = new RegExp(regex, "gim");
 
