@@ -40,7 +40,13 @@ export class HooksManager {
         });
 
         Hooks.on("renderChatMessage", (app, html, data) => {
+            if (game.system.id == "dnd5e") return;
             HideNPCNames.onRenderChatMessage(app, html, data);
+        });
+
+        Hooks.on("dnd5e.renderChatMessage", (message, html) => {
+            html = $(html);
+            HideNPCNames.onRenderChatMessage(message, html);
         });
         
         Hooks.on("renderCombatTracker", (app, html, data) => {
