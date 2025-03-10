@@ -13,6 +13,9 @@ export class HideNPCNames {
     static onUpdateActor(actor, update, options, user) {
         if (!Utils.hasModuleFlags(update)) return;
         HideNPCNames.updateEntityMessages(actor);
+        for (let token of actor.getActiveTokens()) {
+            token.refresh();
+        }
     }
 
     /**
@@ -23,8 +26,12 @@ export class HideNPCNames {
      * @param {*} user 
      */
     static onUpdateToken(token, update, options, user) {
-        if (!Utils.hasModuleFlags(update) && update.disposition == undefined) return;
-        HideNPCNames.updateEntityMessages(token);
+        if (Utils.hasModuleFlags(update) ||
+            update.disposition != undefined ||
+            update.name != undefined) {
+            HideNPCNames.updateEntityMessages(token);
+            token.refresh();
+        }
     }
 
     /**
@@ -85,14 +92,10 @@ export class HideNPCNames {
         if (!combatants || !combatants?.length) return;
 
         const npcs = combatants.filter(c => c.actor?.hasPlayerOwner === false).map(npc => {
-            const shouldReplace = HideNPCNames.shouldReplaceName(npc.actor);
-            const combatantName = HideNPCNames.getCombatantName(npc.actor, npc.name);
-            const replacementName = HideNPCNames.getReplacementName(npc.actor, npc.name);
+            const replacementInfo = HideNPCNames.getReplacementInfo(npc.actor, npc.name);
             return {
+                ...replacementInfo,
                 id: npc.id,
-                shouldReplace: shouldReplace,
-                replacementName: replacementName,
-                name: combatantName,
                 isOwner: npc.actor.isOwner,
                 actor: npc.actor
             };
@@ -117,8 +120,8 @@ export class HideNPCNames {
                 continue;
             }
 
-            $(el).find(".token-name h4").text(npc.name);
-            $(el).find(".token-image").attr("title", npc.name);
+            $(el).find(".token-name h4").text(npc.displayName);
+            $(el).find(".token-image").attr("title", npc.displayName);
         }
     }
 
@@ -136,18 +139,17 @@ export class HideNPCNames {
         const actor = ChatMessage.getSpeakerActor(speaker);
         if (!actor || actor.hasPlayerOwner) return;
 
-        const shouldReplace = HideNPCNames.shouldReplaceName(actor);
-        const replacementName = HideNPCNames.getReplacementName(actor);
+        const replacementInfo = HideNPCNames.getReplacementInfo(actor);
 
         // If we are the GM or the actor's owner, simply apply the icon to the name and return
         if (game.user.isGM || actor.isOwner) {
             const senderName = html.find("header").children().first();
-            const $icon = this.getHideIconHtml(shouldReplace, replacementName);
+            const $icon = this.getHideIconHtml(replacementInfo);
             $icon.on("click", (event) => this.onClickChatMessageIcon(event));
             return senderName.append($icon);
         }
 
-        if (!shouldReplace) return;
+        if (!replacementInfo.shouldReplace) return;
 
         const hideParts = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS.hideParts);
         let matchString = null;
@@ -175,7 +177,7 @@ export class HideNPCNames {
         [html[0],...html[0].querySelectorAll("*:not(script):not(noscript):not(style)")]
         .forEach(({childNodes: [...nodes]}) => nodes
         .filter(({nodeType}) => nodeType === document.TEXT_NODE)
-        .forEach((textNode) => textNode.textContent = textNode.textContent.replace(pattern, replacementName)));
+        .forEach((textNode) => textNode.textContent = textNode.textContent.replace(pattern, replacementInfo.replacementName)));
     }
 
     /**
@@ -240,6 +242,7 @@ export class HideNPCNames {
      * @returns {Boolean} shouldReplace
      */
     static shouldReplaceName(actor) {
+        if (actor.hasPlayerOwner) return false;
         const dispositionEnum = actor.isToken ? actor.token.disposition : actor.prototypeToken.disposition;
         const disposition = Utils.getKeyByValue(CONST.TOKEN_DISPOSITIONS, dispositionEnum);
         const hideSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[`hide${disposition.titleCase()}`]);
@@ -247,20 +250,6 @@ export class HideNPCNames {
         const shouldReplace = nameHiddenOverride ?? hideSetting;
 
         return !!shouldReplace;
-    }
-
-    /**
-     * For a given actor, find out if there is a replacement name and return it
-     * @param {*} actor 
-     * @returns {String} replacementName
-     */
-    static getCombatantName(actor, defaultName) {
-        if (game.user.isGM || actor.isOwner) return defaultName;
-        
-        const shouldReplace = HideNPCNames.shouldReplaceName(actor);
-        if (!shouldReplace) return defaultName;
-        
-        return HideNPCNames.getReplacementName(actor);
     }
 
     /**
@@ -279,12 +268,28 @@ export class HideNPCNames {
     }
 
     /**
+     * For a given actor, find out if there is a replacement name and return it
+     * @param {*} actor 
+     * @returns {String} replacementName
+     */
+    static getReplacementInfo(actor, defaultName) {
+        let returnObject = {
+            displayName: defaultName ?? actor.name,
+            replacementName: HideNPCNames.getReplacementName(actor),
+            shouldReplace: HideNPCNames.shouldReplaceName(actor)
+        };
+
+        returnObject.displayName = (!returnObject.shouldReplace || game.user.isGM || actor.isOwner ) ? returnObject.displayName : returnObject.replacementName;        
+        return returnObject;
+    }
+
+    /**
      * Generates the html for the show/hide icon
      * @param {*} shouldReplace 
      * @param {*} replacementName 
      * @returns {String} icon html
      */
-    static getHideIconHtml(shouldReplace, replacementName) {
+    static getHideIconHtml({shouldReplace, replacementName}) {
         const title = `${shouldReplace ? `${game.i18n.localize(`MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`MessageIcon.Title.NameHiddenSuffix`)}` : game.i18n.localize(`MessageIcon.Title.NameNotHidden`)}`;
         const $icon = $(
             `<a class="hide-name"><span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>

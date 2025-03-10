@@ -1,5 +1,6 @@
 import { registerSettings } from "./settings.js";
 import { HideNPCNames } from "./hide-npc-names.js";
+import { Utils } from "./utils.js";
 
 export class HooksManager {
     /**
@@ -10,12 +11,22 @@ export class HooksManager {
         Hooks.on("init", () => {
             registerSettings();
 
-            //Override the name property on combatants to use a getter and setter
-            //We do this so that the names are still correctly hidden in other modules such as Carousel Combat Tracker
+            //Override the name property on combatants and tokens to use a getter and setter
+            //We do this so that the names are still correctly hidden without having to manually update every place that uses them
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "name", {
                 get: function () {
-                    return HideNPCNames.getCombatantName(this.token.actor, this.__name);
+                    return HideNPCNames.getReplacementInfo(this.token.actor, this.__name).displayName;
+                },
+                set: function (name) {
+                       this.__name = name;
+                     }
+              });
+              
+            Object.defineProperty(CONFIG.Token.documentClass.prototype, "__name", { value: "", writable: true });
+            Object.defineProperty(CONFIG.Token.documentClass.prototype, "name", {
+                get: function () {
+                    return HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName;
                 },
                 set: function (name) {
                        this.__name = name;
