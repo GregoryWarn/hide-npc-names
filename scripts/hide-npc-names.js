@@ -114,7 +114,7 @@ export class HideNPCNames {
             if (!npc) continue;
 
             if (game.user.isGM || npc.isOwner) {
-                const $icon = this.getHideIconHtml(npc.shouldReplace, npc.replacementName);
+                const $icon = this.getHideIconHtml(npc);
                 $(el).find(".token-name").children().first().append($icon);
                 $icon.on("click", (event) => this.onClickCombatTrackerIcon(npc));
                 continue;
