@@ -19,19 +19,29 @@ export class HooksManager {
                     return HideNPCNames.getReplacementInfo(this.token.actor, this.__name).displayName;
                 },
                 set: function (name) {
-                       this.__name = name;
-                     }
-              });
-              
+                    this.__name = name;
+                }
+            });
+
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "name", {
                 get: function () {
                     return HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName;
                 },
                 set: function (name) {
-                       this.__name = name;
-                     }
-              });
+                    this.__name = name;
+                }
+            });
+
+            Object.defineProperty(foundry.data.PrototypeToken.prototype, "__name", { value: "", writable: true });
+            Object.defineProperty(foundry.data.PrototypeToken.prototype, "name", {
+                get: function () {
+                    return HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName;
+                },
+                set: function (name) {
+                    this.__name = name;
+                }
+            });
         });
 
         Hooks.on("updateActor", (actor, updateData, options, userId) => {
@@ -59,7 +69,7 @@ export class HooksManager {
             html = $(html);
             HideNPCNames.onRenderChatMessage(message, html);
         });
-        
+
         Hooks.on("renderCombatTracker", (app, html, data) => {
             HideNPCNames.onRenderCombatTracker(app, html, data);
         });
