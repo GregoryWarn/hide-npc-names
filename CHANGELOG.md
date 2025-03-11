@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+* Fixed a crash when summoning a creature in dnd5e
+
 ## 0.3.0
 
 * Added support for dnd5e combat tracker groups
