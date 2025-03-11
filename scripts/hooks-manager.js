@@ -26,7 +26,7 @@ export class HooksManager {
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "name", {
                 get: function () {
-                    return HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName;
+                    return this.actor ? HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName : this.__name;
                 },
                 set: function (name) {
                     this.__name = name;
