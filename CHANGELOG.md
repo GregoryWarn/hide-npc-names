@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+* Potential fix for another null error
+
 ## 0.3.1
 
 * Fixed a crash when summoning a creature in dnd5e
