@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+* The GM now adds "(Hidden)" to the end of token names when the name is hidden
+
 ## 0.3.2
 
 * Potential fix for another null error
