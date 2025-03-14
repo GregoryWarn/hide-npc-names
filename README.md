@@ -7,3 +7,10 @@ This module for Foundry VTT allows you to replace NPC names with an alternative 
 
 ##### Player View:
 <img src="https://github.com/ddbrown30/hide-npc-names/blob/main/player_view.webp" width="500">
+
+### Actor Menu:
+If you want more direct control over a specific actor or token, open its actor sheet and click the mask icon in the upper left corner.
+<img src="https://github.com/ddbrown30/hide-npc-names/blob/main/actor_sheet.webp" width="500">
+
+This will open a menu that allows you to set the hidden state of the actor and to override the replacement name.
+<img src="https://github.com/ddbrown30/hide-npc-names/blob/main/actor_menu.webp" width="500">
