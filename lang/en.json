@@ -20,6 +20,8 @@
 
     "ActorSheetButton": "Configure name hiding for this actor",
 
+    "TokenName.Hidden": " (Hidden)",
+
     "Settings.HideHostileN": "Hide Hostile Names",
     "Settings.HideHostileH": "Hide Names of Actors with Token Disposition set to HOSTILE",
     "Settings.HideNeutralN": "Hide Neutral Names",
