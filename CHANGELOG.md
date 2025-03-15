@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+* Added a setting to change the token name suffix
+* Added Italian (GregoryWarn)
+* Fixed the token name suffix showing up for players
+
 ## 0.4.0
 
 * The GM now adds "(Hidden)" to the end of token names when the name is hidden
