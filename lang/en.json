@@ -20,7 +20,8 @@
 
     "ActorSheetButton": "Configure name hiding for this actor",
 
-    "TokenName.Hidden": " (Hidden)",
+    "Defaults.TokenNameHiddenSuffix": "(Hidden)",
+    "Defaults.UnknownCreature": "Unknown Creature",
 
     "Settings.HideHostileN": "Hide Hostile Names",
     "Settings.HideHostileH": "Hide Names of Actors with Token Disposition set to HOSTILE",
@@ -39,5 +40,7 @@
     "Settings.FriendlyReplacementN": "Friendly Replacement Name",
     "Settings.FriendlyReplacementH": "The default name to use when replacing Friendly Actor names",
     "Settings.SecretReplacementN": "Secret Replacement Name",
-    "Settings.SecretReplacementH": "The default name to use when replacing Secret Actor names"
+    "Settings.SecretReplacementH": "The default name to use when replacing Secret Actor names",
+    "Settings.TokenNameHiddenSuffixN": "Token Name Hidden Suffix",
+    "Settings.TokenNameHiddenSuffixH": "The string that gets appended to the token name of hidden tokens in the GM's view"
 }

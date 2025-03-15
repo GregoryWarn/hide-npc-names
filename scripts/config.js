@@ -16,10 +16,8 @@ export const DEFAULT_CONFIG = {
     hideNeutral: true,
     hideFriendly: false,
     hideSecret: true,
-    hostileNameReplacement: "Unknown Creature",
-    neutralNameReplacement: "Unknown Creature",
-    friendlyNameReplacement: "Unknown Creature",
-    secretNameReplacement: "Unknown Creature",
+    nameReplacement: "Defaults.UnknownCreature",
+    tokenHiddenSuffix: "Defaults.TokenNameHiddenSuffix",
     hideParts: true,
 }
 
@@ -37,6 +35,7 @@ export const SETTING_KEYS = {
     neutralNameReplacement: "neutralNameReplacement",
     friendlyNameReplacement: "friendlyNameReplacement",
     secretNameReplacement: "secretNameReplacement",
+    tokenHiddenSuffix: "tokenHiddenSuffix",
     hideParts: "hideParts"
 }
 

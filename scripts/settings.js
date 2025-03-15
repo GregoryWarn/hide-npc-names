@@ -58,7 +58,7 @@ export function registerSettings() {
         hint: "Settings.HostileReplacementH",
         scope: "world",
         type: String,
-        default: MODULE_CONFIG.DEFAULT_CONFIG.hostileNameReplacement,
+        default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
         config: true,
         requiresReload: true
     });
@@ -68,7 +68,7 @@ export function registerSettings() {
         hint: "Settings.NeutralReplacementH",
         scope: "world",
         type: String,
-        default: MODULE_CONFIG.DEFAULT_CONFIG.neutralNameReplacement,
+        default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
         config: true,
         requiresReload: true
     });
@@ -78,7 +78,7 @@ export function registerSettings() {
         hint: "Settings.FriendlyReplacementH",
         scope: "world",
         type: String,
-        default: MODULE_CONFIG.DEFAULT_CONFIG.friendlyNameReplacement,
+        default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
         config: true,
         requiresReload: true
     });
@@ -88,7 +88,17 @@ export function registerSettings() {
         hint: "Settings.SecretReplacementH",
         scope: "world",
         type: String,
-        default: MODULE_CONFIG.DEFAULT_CONFIG.secretNameReplacement,
+        default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
+        config: true,
+        requiresReload: true
+    });
+
+    Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.tokenHiddenSuffix, {
+        name: "Settings.TokenNameHiddenSuffixN",
+        hint: "Settings.TokenNameHiddenSuffixH",
+        scope: "world",
+        type: String,
+        default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.tokenHiddenSuffix),
         config: true,
         requiresReload: true
     });

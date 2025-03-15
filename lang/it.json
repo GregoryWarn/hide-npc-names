@@ -20,7 +20,8 @@
 
     "ActorSheetButton": "Configura l'occultamento del nome per questo personaggio",
 
-    "TokenName.Hidden": " (Nascosto)",
+    "Defaults.TokenNameHiddenSuffix": "(Nascosto)",
+    "Defaults.UnknownCreature": "Creatura Sconosciuta",
 
     "Settings.HideHostileN": "Nascondi nomi ostili",
     "Settings.HideHostileH": "Nascondi i nomi dei personaggi con la disposizione del token impostata su OSTILE",
@@ -39,5 +40,7 @@
     "Settings.FriendlyReplacementN": "Nome sostitutivo per amichevoli",
     "Settings.FriendlyReplacementH": "Il nome predefinito da utilizzare per sostituire i nomi dei personaggi amichevoli",
     "Settings.SecretReplacementN": "Nome sostitutivo per segreti",
-    "Settings.SecretReplacementH": "Il nome predefinito da utilizzare per sostituire i nomi dei personaggi segreti"
+    "Settings.SecretReplacementH": "Il nome predefinito da utilizzare per sostituire i nomi dei personaggi segreti",
+    "Settings.TokenNameHiddenSuffixN": "Suffisso nascosto del nome del token",
+    "Settings.TokenNameHiddenSuffixH": "La stringa che viene aggiunta al nome del token dei token nascosti nella vista del GM"
 }

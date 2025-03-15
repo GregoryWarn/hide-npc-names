@@ -1,16 +1,15 @@
 import { registerSettings } from "./settings.js";
 import { HideNPCNames } from "./hide-npc-names.js";
 import { Utils } from "./utils.js";
+import { SETTING_KEYS } from "./config.js";
 
 export class HooksManager {
     /**
      * Registers hooks
      */
     static registerHooks() {
-
+         
         Hooks.on("init", () => {
-            registerSettings();
-
             //Override the name property on combatants and tokens to use a getter and setter
             //We do this so that the names are still correctly hidden without having to manually update every place that uses them
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "__name", { value: "", writable: true });
@@ -30,7 +29,8 @@ export class HooksManager {
                     let replacementInfo = HideNPCNames.getReplacementInfo(this.actor, this.__name);
                     let retVal = replacementInfo.displayName;
                     if (game.user.isGM && replacementInfo.shouldReplace) {
-                        retVal += game.i18n.localize("TokenName.Hidden");
+                        let hiddenSuffix = Utils.getSetting(SETTING_KEYS.tokenHiddenSuffix);
+                        retVal += " " + hiddenSuffix;
                     }
                     return retVal;
                 },
@@ -49,6 +49,11 @@ export class HooksManager {
                 }
             });
         });
+
+        Hooks.on("i18nInit", () => {
+            registerSettings();
+        });
+
 
         Hooks.on("updateActor", (actor, updateData, options, userId) => {
             HideNPCNames.onUpdateActor(actor, updateData, options, userId);
