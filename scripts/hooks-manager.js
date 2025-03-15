@@ -29,7 +29,7 @@ export class HooksManager {
                     if(!this.actor) return this.__name;
                     let replacementInfo = HideNPCNames.getReplacementInfo(this.actor, this.__name);
                     let retVal = replacementInfo.displayName;
-                    if (replacementInfo.shouldReplace) {
+                    if (game.user.isGM && replacementInfo.shouldReplace) {
                         retVal += game.i18n.localize("TokenName.Hidden");
                     }
                     return retVal;
