@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+* Fixed bad refresh call when updating the token document
+
 ## 0.5.0
 
 * Added a setting to change the token name suffix
