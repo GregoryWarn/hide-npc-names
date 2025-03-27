@@ -29,7 +29,7 @@ export class HideNPCNames {
         if (Utils.hasModuleFlags(update) ||
             update.disposition != undefined ||
             update.name != undefined) {
-            HideNPCNames.updateEntityMessages(token);
+            HideNPCNames.updateEntityMessages(tokenDocument);
             if (tokenDocument.object) {
                 tokenDocument.object.refresh();
             }
