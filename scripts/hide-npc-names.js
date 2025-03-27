@@ -25,12 +25,14 @@ export class HideNPCNames {
      * @param {*} options 
      * @param {*} user 
      */
-    static onUpdateToken(token, update, options, user) {
+    static onUpdateToken(tokenDocument, update, options, user) {
         if (Utils.hasModuleFlags(update) ||
             update.disposition != undefined ||
             update.name != undefined) {
             HideNPCNames.updateEntityMessages(token);
-            token.refresh();
+            if (tokenDocument.object) {
+                tokenDocument.object.refresh();
+            }
         }
     }
 
