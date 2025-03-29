@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+
+* Replacement now keeps the append/prepend values
+* Properly remove flags when clearing overrides
+
 ## 0.5.1
 
 * Fixed bad refresh call when updating the token document
