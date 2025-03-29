@@ -76,8 +76,8 @@ export class ActorForm extends FormApplication {
     async onClickClear(event) {
         const actor = this.object;
         await actor.update({
-            [`flags.${MODULE_CONFIG.NAME}.${MODULE_CONFIG.FLAGS.nameHiddenOverride}`] : null,
-            [`flags.${MODULE_CONFIG.NAME}.${MODULE_CONFIG.FLAGS.replacementNameOverride}`] : null 
+            [`flags.${MODULE_CONFIG.NAME}.-=${MODULE_CONFIG.FLAGS.nameHiddenOverride}`] : null,
+            [`flags.${MODULE_CONFIG.NAME}.-=${MODULE_CONFIG.FLAGS.replacementNameOverride}`] : null 
         });
         this.close();
     }
