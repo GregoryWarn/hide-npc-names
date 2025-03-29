@@ -119,11 +119,7 @@ export class HideNPCNames {
                 const $icon = this.getHideIconHtml(npc);
                 $(el).find(".token-name").children().first().append($icon);
                 $icon.on("click", (event) => this.onClickCombatTrackerIcon(npc));
-                continue;
             }
-
-            $(el).find(".token-name h4").text(npc.displayName);
-            $(el).find(".token-image").attr("title", npc.displayName);
         }
     }
 
@@ -264,7 +260,10 @@ export class HideNPCNames {
         const disposition = Utils.getKeyByValue(CONST.TOKEN_DISPOSITIONS, dispositionEnum);
         const replacementSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[`${disposition.toLowerCase()}NameReplacement`]);
         const replacementNameOverride = Utils.getModuleFlag(actor, MODULE_CONFIG.FLAGS.replacementNameOverride);
-        const replacementName = replacementNameOverride ?? replacementSetting;
+        let replacementName = replacementNameOverride ?? replacementSetting;
+        let tokenName = actor.token?.__name ?? actor.token?.name;
+        let protoName = actor.prototypeToken?.__name ?? actor.prototypeToken?.name;
+        replacementName = tokenName ? tokenName.replace(protoName, replacementName) : replacementName;
 
         return replacementName;
     }
