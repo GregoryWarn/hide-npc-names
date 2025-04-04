@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+* The replacement state and toggling is now done globally based on the base actor i.e. it is no longer possible to toggle individual tokens
+* Added an option to add the toggle buttons in the Actors Tab
+
 ## 0.6.0
 
 * Replacement now keeps the append/prepend values
