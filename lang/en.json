@@ -2,10 +2,10 @@
     "MessageIcon.Title.NameNotHidden": "Name not hidden (click to hide)",
     "MessageIcon.Title.NameHiddenPrefix": "Replacement Name:",
     "MessageIcon.Title.NameHiddenSuffix": "(click to reveal)",
-    
+
     "ActorForm.Title": "Hide Name Overrides",
-    "ActorForm.TokenDisposition": "Token Disposition: ",
-    "ActorForm.TokenDispositionHint": "The current disposition of this token. Configured in the token settings on this actor.",
+    "ActorForm.TokenDisposition": "Prototype Token Disposition: ",
+    "ActorForm.TokenDispositionHint": "The disposition of the prototype token. Configured in the prototype token settings of the base actor.",
     "ActorForm.DefaultBehaviour": "Default Behaviour: ",
     "ActorForm.DefaultBehaviourHint": "The current default for this disposition type. Configured in the module settings.",
     "ActorForm.Hidden": "Hidden",
@@ -42,5 +42,7 @@
     "Settings.SecretReplacementN": "Secret Replacement Name",
     "Settings.SecretReplacementH": "The default name to use when replacing Secret Actor names",
     "Settings.TokenNameHiddenSuffixN": "Token Name Hidden Suffix",
-    "Settings.TokenNameHiddenSuffixH": "The string that gets appended to the token name of hidden tokens in the GM's view"
+    "Settings.TokenNameHiddenSuffixH": "The string that gets appended to the token name of hidden tokens in the GM's view",
+    "Settings.ShowOnActorDirectoryN": "Show on Actors Tab",
+    "Settings.ShowOnActorDirectoryH": "When enabled, the show/hide button will appear next to actors in the Actors Tab"
 }

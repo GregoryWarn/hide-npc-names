@@ -19,6 +19,7 @@ export const DEFAULT_CONFIG = {
     nameReplacement: "Defaults.UnknownCreature",
     tokenHiddenSuffix: "Defaults.TokenNameHiddenSuffix",
     hideParts: true,
+    showOnActorDirectory: false,
 }
 
 export const FLAGS = {
@@ -36,6 +37,7 @@ export const SETTING_KEYS = {
     friendlyNameReplacement: "friendlyNameReplacement",
     secretNameReplacement: "secretNameReplacement",
     tokenHiddenSuffix: "tokenHiddenSuffix",
-    hideParts: "hideParts"
+    hideParts: "hideParts",
+    showOnActorDirectory: "showOnActorDirectory"
 }
 

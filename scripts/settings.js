@@ -53,6 +53,16 @@ export function registerSettings() {
         requiresReload: true
     });
 
+    Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.showOnActorDirectory, {
+        name: "Settings.ShowOnActorDirectoryN",
+        hint: "Settings.ShowOnActorDirectoryH",
+        scope: "world",
+        type: Boolean,
+        default: MODULE_CONFIG.DEFAULT_CONFIG.showOnActorDirectory,
+        config: true,
+        requiresReload: true
+    });
+
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hostileNameReplacement, {
         name: "Settings.HostileReplacementN",
         hint: "Settings.HostileReplacementH",

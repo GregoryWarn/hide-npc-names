@@ -7,7 +7,7 @@ export class Utils {
 
     /**
      * Get a single setting using the provided key
-     * @param {*} key 
+     * @param {*} key
      * @returns {Object} setting
      */
     static getSetting(key) {
@@ -16,9 +16,9 @@ export class Utils {
 
     /**
      * Sets a single game setting
-     * @param {*} key 
-     * @param {*} value 
-     * @param {*} awaitResult 
+     * @param {*} key
+     * @param {*} value
+     * @param {*} awaitResult
      * @returns {Promise | ClientSetting}
      */
     static async setSetting(key, value, awaitResult=false) {
@@ -35,8 +35,8 @@ export class Utils {
 
     /**
      * Register a single setting using the provided key and setting data
-     * @param {*} key 
-     * @param {*} metadata 
+     * @param {*} key
+     * @param {*} metadata
      * @returns {ClientSettings.register}
      */
     static registerSetting(key, metadata) {
@@ -45,8 +45,8 @@ export class Utils {
 
     /**
      * Register a menu setting using the provided key and setting data
-     * @param {*} key 
-     * @param {*} metadata 
+     * @param {*} key
+     * @param {*} metadata
      * @returns {ClientSettings.registerMenu}
      */
     static registerMenu(key, metadata) {
@@ -66,7 +66,7 @@ export class Utils {
         const msg = `${MODULE_CONFIG.SHORT_TITLE} | ${message}`;
         return ui.notifications[type](msg, options);
     }
-    
+
     static consoleMessage(type, {objects=[], message="", subStr=[]}) {
         const msg = `${MODULE_CONFIG.TITLE} | ${message}`;
         const params = [];
@@ -99,7 +99,7 @@ export class Utils {
     /**
      * Retrieves a key using the given value
      * @param {Object} object -- the object that contains the key/value
-     * @param {*} value 
+     * @param {*} value
      */
     static getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
@@ -107,7 +107,7 @@ export class Utils {
 
     /**
      * Takes an array of terms (eg. name parts) and returns groups of neighbouring terms
-     * @param {*} arr 
+     * @param {*} arr
      */
     static getTerms(arr) {
         const terms = [];
@@ -118,7 +118,7 @@ export class Utils {
                 let part = arr.slice(p, p+len);
                 if (part.length === 1 && rejectTerms.includes(part[0])) {
                     continue;
-                } 
+                }
                 terms.push(part.join(" "));
             }
         }
@@ -127,10 +127,19 @@ export class Utils {
 
     /**
      * Escapes regex special chars
-     * @param {String} string 
+     * @param {String} string
      * @return {String} escapedString
      */
     static escapeRegExp(string) {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    /**
+     * Gets the base actor if this is a token actor
+     * @param {Actor} actor
+     * @return {Actor} base actor
+     */
+    static getBaseActor(actor) {
+        return actor.isToken ? actor.token.baseActor : actor;
     }
 }

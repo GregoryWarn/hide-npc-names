@@ -1,14 +1,14 @@
 import { Utils } from "./utils.js";
-import * as MODULE_CONFIG from "./config.js";
 import { ActorForm } from "./actor-form.js";
+import { FLAGS, SETTING_KEYS } from "./config.js";
 
 export class HideNPCNames {
     /**
      * Update Actor handler
-     * @param {*} actor 
-     * @param {*} update 
-     * @param {*} options 
-     * @param {*} user 
+     * @param {*} actor
+     * @param {*} update
+     * @param {*} options
+     * @param {*} user
      */
     static onUpdateActor(actor, update, options, user) {
         if (!Utils.hasModuleFlags(update)) return;
@@ -20,10 +20,10 @@ export class HideNPCNames {
 
     /**
      * Update Token handler
-     * @param {*} token 
-     * @param {*} update 
-     * @param {*} options 
-     * @param {*} user 
+     * @param {*} token
+     * @param {*} update
+     * @param {*} options
+     * @param {*} user
      */
     static onUpdateToken(tokenDocument, update, options, user) {
         if (Utils.hasModuleFlags(update) ||
@@ -38,7 +38,7 @@ export class HideNPCNames {
 
     /**
      * Updates Chat Messages related to a specific entity (eg. actor or token)
-     * @param {*} entity 
+     * @param {*} entity
      */
     static updateEntityMessages(entity) {
         const isToken = entity instanceof Token || entity instanceof TokenDocument;
@@ -57,9 +57,9 @@ export class HideNPCNames {
 
     /**
      * Handle render Actor sheet
-     * @param {*} app 
-     * @param {*} html 
-     * @param {*} data 
+     * @param {*} app
+     * @param {*} html
+     * @param {*} data
      */
     static onRenderActorSheet(app, html, data) {
         if (!game.user.isGM || app.object.hasPlayerOwner) return;
@@ -86,7 +86,6 @@ export class HideNPCNames {
      * Hooks on the Combat Tracker render to replace the names
      * @param {Object} app - the Application instance
      * @param {Object} html - jQuery html object
-     * @todo refactor required
      */
     static onRenderCombatTracker(app, html, data) {
         // find the NPC combatants
@@ -118,16 +117,67 @@ export class HideNPCNames {
             if (game.user.isGM || npc.isOwner) {
                 const $icon = this.getHideIconHtml(npc);
                 $(el).find(".token-name").children().first().append($icon);
-                $icon.on("click", (event) => this.onClickCombatTrackerIcon(npc));
+                $icon.on("click", (event) => this.toggleActorHidden(npc.actor));
             }
         }
     }
 
     /**
+     * Hooks on the Actor Directory render to add the reveal button
+     * @param {Object} app - the Application instance
+     * @param {Object} html - jQuery html object
+     */
+    static async onRenderActorDirectory(app, html) {
+        if (!Utils.getSetting(SETTING_KEYS.showOnActorDirectory)) return;
+
+        //For each replacement, find the matching element and replace
+        const actorListElement = html.find("li");
+        for (const el of actorListElement) {
+            const documentId = el.dataset.documentId;
+            if (documentId) {
+                const actor = game.actors.get(documentId);
+                if (actor && !actor.hasPlayerOwner && (game.user.isGM || actor.isOwner)) {
+                    const replacementInfo = HideNPCNames.getReplacementInfo(actor, actor.name);
+                    const $icon = this.getHideIconHtml(replacementInfo);
+                    $(el).find(".document-name").children().first().append($icon);
+                    $icon.on("click", async (event) => {
+                        event.stopPropagation();
+                        await this.toggleActorHidden(actor);
+                    });
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes the hidden suffix from the alias
+     * @param {*} message
+     * @param {*} options
+     * @param {*} userId
+     */
+    static async onCreateChatMessage(message, options, userId) {
+        //An unfortunate hack required because of the way we override the name property
+        //When we create a new message, we need to remove the hidden suffix from the alias otherwise that is what the unhidden name will be on the chat card
+
+        //Start by getting the token if we have one
+        let token = message.speaker.token && message.speaker.scene ? game.scenes.get(message.speaker.scene).tokens.get(message.speaker.token) : null;
+
+        //Get the default alias for the speaker
+        let baseAlias = token.__name ?? game.actors.get(message.speaker.actor).name;
+
+        //Find the string in the current alias of the baseAlias + the hiddenSuffix and remove the hidden suffix
+        let hiddenSuffix = Utils.getSetting(SETTING_KEYS.tokenHiddenSuffix);
+        let newAlias = message.speaker.alias.replace(`${baseAlias} ${hiddenSuffix}`, baseAlias);
+        if (newAlias != message.speaker.alias) {
+            await message.update({ speaker: { alias: newAlias } });
+        }
+    }
+
+    /**
      * Handles name replacement for chat messages
-     * @param {*} message 
-     * @param {*} html 
-     * @param {*} data 
+     * @param {*} message
+     * @param {*} html
+     * @param {*} data
      */
     static async onRenderChatMessage(message, html, data) {
         const speaker = message.speaker;
@@ -149,7 +199,7 @@ export class HideNPCNames {
 
         if (!replacementInfo.shouldReplace) return;
 
-        const hideParts = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS.hideParts);
+        const hideParts = Utils.getSetting(SETTING_KEYS.hideParts);
         let matchString = null;
 
         // If there's a space in the name and name parts should be hidden, perform additional manipulation
@@ -163,8 +213,8 @@ export class HideNPCNames {
                 if (terms[0] !== name) { terms[0] = name; }
                 matchString = terms.map(t => { return Utils.escapeRegExp(t.trim()); }).filter(t => t.length).join("|");
             }
-        } 
-        
+        }
+
         matchString = matchString ?? Utils.escapeRegExp(name);
 
         // Escape regex in the match to ensure it is parsed correctly
@@ -180,9 +230,9 @@ export class HideNPCNames {
 
     /**
      * Replace names in the image popout
-     * @param {*} app 
-     * @param {*} html 
-     * @param {*} data 
+     * @param {*} app
+     * @param {*} html
+     * @param {*} data
      */
     static onRenderImagePopout(app, html, data) {
         const uuid = app.options?.uuid;
@@ -209,7 +259,7 @@ export class HideNPCNames {
 
     /**
      * Chat Message Icon click handler
-     * @param {*} event 
+     * @param {*} event
      */
     static async onClickChatMessageIcon(event) {
         const icon = event.target;
@@ -217,34 +267,41 @@ export class HideNPCNames {
         const messageId = chatMessageLi?.dataset.messageId;
         const message = game.messages.get(messageId);
         const actor = ChatMessage.getSpeakerActor(message?.speaker);
-        if (!actor) return;
-
-        const shouldReplace = HideNPCNames.shouldReplaceName(actor);
-        await Utils.setModuleFlag(actor, MODULE_CONFIG.FLAGS.nameHiddenOverride, !shouldReplace);
+        this.toggleActorHidden(actor);
     }
 
     /**
-     * Chat Message Icon click handler
-     * @param {*} event 
+     * @param {Actor} actor
      */
-    static async onClickCombatTrackerIcon(npc) {
-        if (!npc.actor) return;
+    static async toggleActorHidden(actor) {
+        if (!actor) return;
 
-        const shouldReplace = HideNPCNames.shouldReplaceName(npc.actor);
-        await Utils.setModuleFlag(npc.actor, MODULE_CONFIG.FLAGS.nameHiddenOverride, !shouldReplace);
+        let replacementInfo = HideNPCNames.getReplacementInfo(actor);
+
+        let baseActor = Utils.getBaseActor(actor);
+        await Utils.setModuleFlag(baseActor, FLAGS.nameHiddenOverride, !replacementInfo.shouldReplace);
+
+        replacementInfo = HideNPCNames.getReplacementInfo(baseActor);
+        let selector = `[data-document-id="${baseActor.id.toString()}"]`;
+        this.swapIcon(replacementInfo, ui.actors._element[0].querySelector(selector));
+        if (ui.actors._popout) {
+            this.swapIcon(replacementInfo, ui.actors._popout._element[0].querySelector(selector));
+        }
     }
 
     /**
      * Checks an actor to see if its name should be replaced
-     * @param {*} actor 
+     * @param {Actor} actor
      * @returns {Boolean} shouldReplace
      */
     static shouldReplaceName(actor) {
         if (actor.hasPlayerOwner) return false;
-        const dispositionEnum = actor.isToken ? actor.token.disposition : actor.prototypeToken.disposition;
+
+        let baseActor = Utils.getBaseActor(actor);
+        const dispositionEnum = baseActor.prototypeToken.disposition;
         const disposition = Utils.getKeyByValue(CONST.TOKEN_DISPOSITIONS, dispositionEnum);
-        const hideSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[`hide${disposition.titleCase()}`]);
-        const nameHiddenOverride = Utils.getModuleFlag(actor, MODULE_CONFIG.FLAGS.nameHiddenOverride);
+        const hideSetting = Utils.getSetting(SETTING_KEYS[`hide${disposition.titleCase()}`]);
+        const nameHiddenOverride = Utils.getModuleFlag(baseActor, FLAGS.nameHiddenOverride);
         const shouldReplace = nameHiddenOverride ?? hideSetting;
 
         return !!shouldReplace;
@@ -252,14 +309,15 @@ export class HideNPCNames {
 
     /**
      * For a given actor, find out if there is a replacement name and return it
-     * @param {*} actor 
+     * @param {*} actor
      * @returns {String} replacementName
      */
     static getReplacementName(actor) {
-        const dispositionEnum = actor.isToken ? actor.token.disposition : actor.prototypeToken.disposition;
+        let baseActor = Utils.getBaseActor(actor);
+        const dispositionEnum = baseActor.prototypeToken.disposition;
         const disposition = Utils.getKeyByValue(CONST.TOKEN_DISPOSITIONS, dispositionEnum);
-        const replacementSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[`${disposition.toLowerCase()}NameReplacement`]);
-        const replacementNameOverride = Utils.getModuleFlag(actor, MODULE_CONFIG.FLAGS.replacementNameOverride);
+        const replacementSetting = Utils.getSetting(SETTING_KEYS[`${disposition.toLowerCase()}NameReplacement`]);
+        const replacementNameOverride = Utils.getModuleFlag(baseActor, FLAGS.replacementNameOverride);
         let replacementName = replacementNameOverride ?? replacementSetting;
         let tokenName = actor.token?.__name ?? actor.token?.name;
         let protoName = actor.prototypeToken?.__name ?? actor.prototypeToken?.name;
@@ -270,7 +328,7 @@ export class HideNPCNames {
 
     /**
      * For a given actor, find out if there is a replacement name and return it
-     * @param {*} actor 
+     * @param {*} actor
      * @returns {String} replacementName
      */
     static getReplacementInfo(actor, defaultName) {
@@ -280,14 +338,14 @@ export class HideNPCNames {
             shouldReplace: HideNPCNames.shouldReplaceName(actor)
         };
 
-        returnObject.displayName = (!returnObject.shouldReplace || game.user.isGM || actor.isOwner ) ? returnObject.displayName : returnObject.replacementName;        
+        returnObject.displayName = (!returnObject.shouldReplace || game.user.isGM || actor.isOwner ) ? returnObject.displayName : returnObject.replacementName;
         return returnObject;
     }
 
     /**
      * Generates the html for the show/hide icon
-     * @param {*} shouldReplace 
-     * @param {*} replacementName 
+     * @param {*} shouldReplace
+     * @param {*} replacementName
      * @returns {String} icon html
      */
     static getHideIconHtml({shouldReplace, replacementName}) {
@@ -297,5 +355,17 @@ export class HideNPCNames {
             ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span></a>`
         );
         return $icon;
+    }
+
+    /**
+     * Changes the icon html to the correct icon
+     * @param {*} shouldReplace
+     * @param {*} icon
+     */
+    static swapIcon({ shouldReplace, replacementName }, actorEntry) {
+        let icon = actorEntry.querySelector(".hide-name");
+        const title = `${shouldReplace ? `${game.i18n.localize(`MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`MessageIcon.Title.NameHiddenSuffix`)}` : game.i18n.localize(`MessageIcon.Title.NameNotHidden`)}`;
+        icon.innerHTML = `<span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
+        ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span></a>`;
     }
 }

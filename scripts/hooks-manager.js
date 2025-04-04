@@ -8,7 +8,7 @@ export class HooksManager {
      * Registers hooks
      */
     static registerHooks() {
-         
+
         Hooks.on("init", () => {
             //Override the name property on combatants and tokens to use a getter and setter
             //We do this so that the names are still correctly hidden without having to manually update every place that uses them
@@ -71,6 +71,10 @@ export class HooksManager {
             HideNPCNames.onRenderActorSheet(app, html, data);
         });
 
+        Hooks.on("createChatMessage", (message, options, userId) => {
+            HideNPCNames.onCreateChatMessage(message, options, userId);
+        });
+
         Hooks.on("renderChatMessage", (app, html, data) => {
             if (game.system.id == "dnd5e") return;
             HideNPCNames.onRenderChatMessage(app, html, data);
@@ -83,6 +87,10 @@ export class HooksManager {
 
         Hooks.on("renderCombatTracker", (app, html, data) => {
             HideNPCNames.onRenderCombatTracker(app, html, data);
+        });
+
+        Hooks.on('renderActorDirectory', (app, html) => {
+            HideNPCNames.onRenderActorDirectory(app, html);
         });
     }
 }
