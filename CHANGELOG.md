@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1
+
+* Fixed Token Action HUD error
+* Fixed and updated Italian localization (GregoryWarn)
+
 ## 0.8.0
 
 * Added Token Action HUD support
