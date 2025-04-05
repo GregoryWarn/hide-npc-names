@@ -1,4 +1,5 @@
 {
+  "HNN": {
     "MessageIcon.Title.NameNotHidden": "Name not hidden (click to hide)",
     "MessageIcon.Title.NameHiddenPrefix": "Replacement Name:",
     "MessageIcon.Title.NameHiddenSuffix": "(click to reveal)",
@@ -9,7 +10,7 @@
     "ActorForm.DefaultBehaviour": "Default Behaviour: ",
     "ActorForm.DefaultBehaviourHint": "The current default for this disposition type. Configured in the module settings.",
     "ActorForm.Hidden": "Hidden",
-    "ActorForm.Shown": "Shown",
+    "ActorForm.Revealed": "Revealed",
     "ActorForm.HiddenEnabled": "Hide Actor Name",
     "ActorForm.HiddenEnabledHint": "Enable hiding of this actor's name in Combat Tracker and Chat Messages (overrides default)",
     "ActorForm.ReplacementName": "Replacement Name",
@@ -19,6 +20,9 @@
     "ActorForm.Cancel": "Cancel",
 
     "ActorSheetButton": "Configure name hiding for this actor",
+
+    "TAH.Hidden": "Name Hidden",
+    "TAH.NotHidden": "Name Not Hidden",
 
     "Defaults.TokenNameHiddenSuffix": "(Hidden)",
     "Defaults.UnknownCreature": "Unknown Creature",
@@ -45,4 +49,5 @@
     "Settings.TokenNameHiddenSuffixH": "The string that gets appended to the token name of hidden tokens in the GM's view",
     "Settings.ShowOnActorDirectoryN": "Show on Actors Tab",
     "Settings.ShowOnActorDirectoryH": "When enabled, the show/hide button will appear next to actors in the Actors Tab"
+  }
 }

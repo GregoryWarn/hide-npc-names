@@ -2,6 +2,7 @@ import { registerSettings } from "./settings.js";
 import { HideNPCNames } from "./hide-npc-names.js";
 import { Utils } from "./utils.js";
 import { SETTING_KEYS } from "./config.js";
+import { HNNTokenActionHud } from "./token-action-hud.js";
 
 export class HooksManager {
     /**
@@ -10,6 +11,8 @@ export class HooksManager {
     static registerHooks() {
 
         Hooks.on("init", () => {
+            game.hnn = game.hnn ?? {};
+
             //Override the name property on combatants and tokens to use a getter and setter
             //We do this so that the names are still correctly hidden without having to manually update every place that uses them
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "__name", { value: "", writable: true });
@@ -91,6 +94,25 @@ export class HooksManager {
 
         Hooks.on('renderActorDirectory', (app, html) => {
             HideNPCNames.onRenderActorDirectory(app, html);
+        });
+
+        /* -------------------------------------------- */
+        /*              Token Action HUD                */
+        /* -------------------------------------------- */
+        Hooks.on('tokenActionHudCoreRegisterDefaults', (defaults) => {
+            HNNTokenActionHud.registerDefaults(defaults);
+        });
+
+        Hooks.on('tokenActionHudCoreApiReady', (module) => {
+            HNNTokenActionHud.createTokenActionHudClasses(module);
+        });
+
+        Hooks.on('tokenActionHudCoreAddActionHandlerExtenders', (actionHandler) => {
+            actionHandler.addActionHandlerExtender(new game.hnn.HNNActionHandlerExtender(actionHandler));
+        });
+
+        Hooks.on('tokenActionHudCoreAddRollHandlerExtenders', (rollHandler) => {
+            rollHandler.addRollHandlerExtender(new game.hnn.HNNRollHandlerExtender());
         });
     }
 }

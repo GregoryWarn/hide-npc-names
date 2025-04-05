@@ -4,8 +4,8 @@ import { Utils } from "./utils.js";
 export function registerSettings() {
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideHostile, {
-        name: "Settings.HideHostileN",
-        hint: "Settings.HideHostileH",
+        name: "HNN.Settings.HideHostileN",
+        hint: "HNN.Settings.HideHostileH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.hideHostile,
@@ -14,8 +14,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideNeutral, {
-        name: "Settings.HideNeutralN",
-        hint: "Settings.HideNeutralH",
+        name: "HNN.Settings.HideNeutralN",
+        hint: "HNN.Settings.HideNeutralH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.hideNeutral,
@@ -24,8 +24,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideFriendly, {
-        name: "Settings.HideFriendlyN",
-        hint: "Settings.HideFriendlyH",
+        name: "HNN.Settings.HideFriendlyN",
+        hint: "HNN.Settings.HideFriendlyH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.hideFriendly,
@@ -34,8 +34,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideSecret, {
-        name: "Settings.HideSecretN",
-        hint: "Settings.HideSecretH",
+        name: "HNN.Settings.HideSecretN",
+        hint: "HNN.Settings.HideSecretH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.hideSecret,
@@ -44,8 +44,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hideParts, {
-        name: "Settings.HidePartsN",
-        hint: "Settings.HidePartsH",
+        name: "HNN.Settings.HidePartsN",
+        hint: "HNN.Settings.HidePartsH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.hideParts,
@@ -54,8 +54,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.showOnActorDirectory, {
-        name: "Settings.ShowOnActorDirectoryN",
-        hint: "Settings.ShowOnActorDirectoryH",
+        name: "HNN.Settings.ShowOnActorDirectoryN",
+        hint: "HNN.Settings.ShowOnActorDirectoryH",
         scope: "world",
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.showOnActorDirectory,
@@ -64,8 +64,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hostileNameReplacement, {
-        name: "Settings.HostileReplacementN",
-        hint: "Settings.HostileReplacementH",
+        name: "HNN.Settings.HostileReplacementN",
+        hint: "HNN.Settings.HostileReplacementH",
         scope: "world",
         type: String,
         default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
@@ -74,8 +74,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.neutralNameReplacement, {
-        name: "Settings.NeutralReplacementN",
-        hint: "Settings.NeutralReplacementH",
+        name: "HNN.Settings.NeutralReplacementN",
+        hint: "HNN.Settings.NeutralReplacementH",
         scope: "world",
         type: String,
         default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
@@ -84,8 +84,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.friendlyNameReplacement, {
-        name: "Settings.FriendlyReplacementN",
-        hint: "Settings.FriendlyReplacementH",
+        name: "HNN.Settings.FriendlyReplacementN",
+        hint: "HNN.Settings.FriendlyReplacementH",
         scope: "world",
         type: String,
         default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
@@ -94,8 +94,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.secretNameReplacement, {
-        name: "Settings.SecretReplacementN",
-        hint: "Settings.SecretReplacementH",
+        name: "HNN.Settings.SecretReplacementN",
+        hint: "HNN.Settings.SecretReplacementH",
         scope: "world",
         type: String,
         default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.nameReplacement),
@@ -104,8 +104,8 @@ export function registerSettings() {
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.tokenHiddenSuffix, {
-        name: "Settings.TokenNameHiddenSuffixN",
-        hint: "Settings.TokenNameHiddenSuffixH",
+        name: "HNN.Settings.TokenNameHiddenSuffixN",
+        hint: "HNN.Settings.TokenNameHiddenSuffixH",
         scope: "world",
         type: String,
         default: game.i18n.localize(MODULE_CONFIG.DEFAULT_CONFIG.tokenHiddenSuffix),

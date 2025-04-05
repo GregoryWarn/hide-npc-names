@@ -71,7 +71,7 @@ export class HideNPCNames {
         const buttonEl = document.createElement("a");
         buttonEl?.classList.add("cub-hide-name");
         buttonEl?.setAttribute("style", "flex: 0; margin: 0");
-        buttonEl?.setAttribute("title", game.i18n.localize("ActorSheetButton"));
+        buttonEl?.setAttribute("title", game.i18n.localize("HNN.ActorSheetButton"));
         buttonEl?.addEventListener("click", (event) => { new ActorForm(app.object).render(true); });
 
         const iconEl = document.createElement("i");
@@ -281,11 +281,13 @@ export class HideNPCNames {
         let baseActor = Utils.getBaseActor(actor);
         await Utils.setModuleFlag(baseActor, FLAGS.nameHiddenOverride, !replacementInfo.shouldReplace);
 
-        replacementInfo = HideNPCNames.getReplacementInfo(baseActor);
-        let selector = `[data-document-id="${baseActor.id.toString()}"]`;
-        this.swapIcon(replacementInfo, ui.actors._element[0].querySelector(selector));
-        if (ui.actors._popout) {
-            this.swapIcon(replacementInfo, ui.actors._popout._element[0].querySelector(selector));
+        if (Utils.getSetting(SETTING_KEYS.showOnActorDirectory)) {
+            replacementInfo = HideNPCNames.getReplacementInfo(baseActor);
+            let selector = `[data-document-id="${baseActor.id.toString()}"]`;
+            this.swapIcon(replacementInfo, ui.actors._element[0].querySelector(selector));
+            if (ui.actors._popout) {
+                this.swapIcon(replacementInfo, ui.actors._popout._element[0].querySelector(selector));
+            }
         }
     }
 
@@ -349,7 +351,10 @@ export class HideNPCNames {
      * @returns {String} icon html
      */
     static getHideIconHtml({shouldReplace, replacementName}) {
-        const title = `${shouldReplace ? `${game.i18n.localize(`MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`MessageIcon.Title.NameHiddenSuffix`)}` : game.i18n.localize(`MessageIcon.Title.NameNotHidden`)}`;
+        const title = `${shouldReplace
+            ? `${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenSuffix`)}`
+            : game.i18n.localize(`HNN.MessageIcon.Title.NameNotHidden`)}`;
+
         const $icon = $(
             `<a class="hide-name"><span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
             ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span></a>`
@@ -364,7 +369,10 @@ export class HideNPCNames {
      */
     static swapIcon({ shouldReplace, replacementName }, actorEntry) {
         let icon = actorEntry.querySelector(".hide-name");
-        const title = `${shouldReplace ? `${game.i18n.localize(`MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`MessageIcon.Title.NameHiddenSuffix`)}` : game.i18n.localize(`MessageIcon.Title.NameNotHidden`)}`;
+        const title = `${shouldReplace
+            ? `${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenSuffix`)}`
+            : game.i18n.localize(`HNN.MessageIcon.Title.NameNotHidden`)}`;
+
         icon.innerHTML = `<span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
         ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span></a>`;
     }

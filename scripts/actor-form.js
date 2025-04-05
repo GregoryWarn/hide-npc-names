@@ -13,7 +13,7 @@ export class ActorForm extends FormApplication {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             id: "hide-names-actor",
-            title: game.i18n.localize("ActorForm.Title"),
+            title: game.i18n.localize("HNN.ActorForm.Title"),
             template: MODULE_CONFIG.DEFAULT_CONFIG.templates.actorForm,
             classes: ["sheet"],
             width: "auto",
@@ -32,7 +32,7 @@ export class ActorForm extends FormApplication {
         const disposition = Utils.getKeyByValue(CONST.TOKEN_DISPOSITIONS, dispositionEnum);
         const dispositionString = game.i18n.localize(`TOKEN.DISPOSITION.${disposition}`);
         const hideSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[`hide${disposition.titleCase()}`]);
-        const hideSettingString = hideSetting ? game.i18n.localize("ActorForm.Hidden") : game.i18n.localize("ActorForm.Shown");
+        const hideSettingString = hideSetting ? game.i18n.localize("HNN.ActorForm.Hidden") : game.i18n.localize("HNN.ActorForm.Revealed");
         const nameHiddenOverride = Utils.getModuleFlag(baseActor, MODULE_CONFIG.FLAGS.nameHiddenOverride);
         const nameHidden = nameHiddenOverride ?? hideSetting;
         const replacementSetting = Utils.getSetting(MODULE_CONFIG.SETTING_KEYS[disposition.toLowerCase() + `NameReplacement`]);

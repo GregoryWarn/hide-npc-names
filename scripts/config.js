@@ -16,8 +16,8 @@ export const DEFAULT_CONFIG = {
     hideNeutral: true,
     hideFriendly: false,
     hideSecret: true,
-    nameReplacement: "Defaults.UnknownCreature",
-    tokenHiddenSuffix: "Defaults.TokenNameHiddenSuffix",
+    nameReplacement: "HNN.Defaults.UnknownCreature",
+    tokenHiddenSuffix: "HNN.Defaults.TokenNameHiddenSuffix",
     hideParts: true,
     showOnActorDirectory: false,
 }

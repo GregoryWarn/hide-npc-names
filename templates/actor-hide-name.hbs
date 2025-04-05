@@ -1,26 +1,26 @@
 <form autocomplete="off" onsubmit="event.preventDefault()">
-    <h2><i class="fas fa-mask"></i> {{localize "ActorForm.Title"}}</h4>
+    <h2><i class="fas fa-mask"></i> {{localize "HNN.ActorForm.Title"}}</h4>
     <div>
-        {{localize "ActorForm.TokenDisposition"}}{{dispositionString}}
-        <p class="notes">{{localize "ActorForm.TokenDispositionHint"}}</p>
+        {{localize "HNN.ActorForm.TokenDisposition"}}{{dispositionString}}
+        <p class="notes">{{localize "HNN.ActorForm.TokenDispositionHint"}}</p>
     </div>
     <div>
-        {{localize "ActorForm.DefaultBehaviour"}}{{hideSettingString}}
-        <p class="notes">{{localize "ActorForm.DefaultBehaviourHint"}}</p>
+        {{localize "HNN.ActorForm.DefaultBehaviour"}}{{hideSettingString}}
+        <p class="notes">{{localize "HNN.ActorForm.DefaultBehaviourHint"}}</p>
     </div>
     <div class="form-group">
-        <label>{{localize "ActorForm.HiddenEnabled"}}</label>
+        <label>{{localize "HNN.ActorForm.HiddenEnabled"}}</label>
         <input type="checkbox" name="hide-name" {{checked nameHidden}}>
-        <p class="notes">{{localize "ActorForm.HiddenEnabledHint"}}</p>
+        <p class="notes">{{localize "HNN.ActorForm.HiddenEnabledHint"}}</p>
     </div>
     <div class="form-group">
-        <label>{{localize "ActorForm.ReplacementName"}}</label>
+        <label>{{localize "HNN.ActorForm.ReplacementName"}}</label>
         <input type="text" name="replacement-name" value="{{replacementName}}">
-        <p class="notes">{{localize "ActorForm.ReplacementHint"}}</p>
+        <p class="notes">{{localize "HNN.ActorForm.ReplacementHint"}}</p>
     </div>
     <footer style="display: flex;">
-        <button type="button" name="save">{{localize "ActorForm.Save"}}</button>
-        <button type="button" name="clear">{{localize "ActorForm.ClearOverrides"}}</button>
-        <button type="button" name="cancel">{{localize "ActorForm.Cancel"}}</button>
+        <button type="button" name="save">{{localize "HNN.ActorForm.Save"}}</button>
+        <button type="button" name="clear">{{localize "HNN.ActorForm.ClearOverrides"}}</button>
+        <button type="button" name="cancel">{{localize "HNN.ActorForm.Cancel"}}</button>
     </footer>
 </form>

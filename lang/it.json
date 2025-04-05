@@ -2,14 +2,14 @@
     "MessageIcon.Title.NameNotHidden": "Nome non nascosto (clicca per nascondere)",
     "MessageIcon.Title.NameHiddenPrefix": "Nome sostitutivo:",
     "MessageIcon.Title.NameHiddenSuffix": "(clicca per rivelare)",
-    
+
     "ActorForm.Title": "Nascondi sovrascritture del nome",
     "ActorForm.TokenDisposition": "Disposizione del token: ",
     "ActorForm.TokenDispositionHint": "La disposizione attuale di questo token. Configurata nelle impostazioni del token per questo personaggio.",
     "ActorForm.DefaultBehaviour": "Comportamento predefinito: ",
     "ActorForm.DefaultBehaviourHint": "Il valore predefinito attuale per questo tipo di disposizione. Configurato nelle impostazioni del modulo.",
     "ActorForm.Hidden": "Nascosto",
-    "ActorForm.Shown": "Visibile",
+    "ActorForm.Revealed": "Visibile",
     "ActorForm.HiddenEnabled": "Nascondi il nome del personaggio",
     "ActorForm.HiddenEnabledHint": "Abilita la funzione per nascondere il nome di questo personaggio nel Combat Tracker e nei messaggi di chat (sostituisce il predefinito)",
     "ActorForm.ReplacementName": "Nome sostitutivo",
