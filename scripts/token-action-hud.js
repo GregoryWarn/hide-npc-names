@@ -21,8 +21,6 @@ export class HNNTokenActionHud {
                 if (!game.user.isGM && !this.actor.isOwner) return;
 
                 if (this.actor) {
-                    const encodedValue = [MODULE_CONFIG.NAME, "toggle"].join(this.actionHandler.delimiter);
-
                     const replacementInfo = HideNPCNames.getReplacementInfo(this.actor, this.actor.name);
                     const title = `${replacementInfo.shouldReplace
                         ? `${game.i18n.localize(`HNN.TAH.Hidden`)} (${replacementInfo.replacementName})`
@@ -32,7 +30,7 @@ export class HNNTokenActionHud {
                         id: "hnnToggleHidden",
                         name: title,
                         img: `${MODULE_CONFIG.PATH}/assets/mask-solid.svg`,
-                        encodedValue: encodedValue,
+                        encodedValue: MODULE_CONFIG.NAME,
                     }];
                     this.actionHandler.addActions(actionsData, { id: MODULE_CONFIG.NAME, type: 'system' })
                 }
@@ -43,8 +41,7 @@ export class HNNTokenActionHud {
         game.hnn.HNNRollHandlerExtender = class HNNRollHandlerExtender extends module.api.RollHandlerExtender {
             /** @override */
             handleActionClick(event, encodedValue, actionHandler) {
-                const payload = encodedValue.split(this.delimiter);
-                if (payload[0] !== MODULE_CONFIG.NAME) return false;
+                if (encodedValue !== MODULE_CONFIG.NAME) return false;
                 HideNPCNames.toggleActorHidden(actionHandler.actor);
                 return true;
             }
