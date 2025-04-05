@@ -1,4 +1,5 @@
 {
+  "HNN": {
     "MessageIcon.Title.NameNotHidden": "Nome non nascosto (clicca per nascondere)",
     "MessageIcon.Title.NameHiddenPrefix": "Nome sostitutivo:",
     "MessageIcon.Title.NameHiddenSuffix": "(clicca per rivelare)",
@@ -18,7 +19,10 @@
     "ActorForm.ClearOverrides": "Cancella sovrascritture",
     "ActorForm.Cancel": "Annulla",
 
-    "ActorSheetButton": "Configura l'occultamento del nome per questo personaggio",
+    "ActorSheetButton": "Configura occultamento del nome per questo personaggio",
+
+    "TAH.Hidden": "Nome Nascosto",
+    "TAH.NotHidden": "Nome Non Nascosto",
 
     "Defaults.TokenNameHiddenSuffix": "(Nascosto)",
     "Defaults.UnknownCreature": "Creatura Sconosciuta",
@@ -42,5 +46,8 @@
     "Settings.SecretReplacementN": "Nome sostitutivo per segreti",
     "Settings.SecretReplacementH": "Il nome predefinito da utilizzare per sostituire i nomi dei personaggi segreti",
     "Settings.TokenNameHiddenSuffixN": "Suffisso nascosto del nome del token",
-    "Settings.TokenNameHiddenSuffixH": "La stringa che viene aggiunta al nome del token dei token nascosti nella vista del GM"
+    "Settings.TokenNameHiddenSuffixH": "La stringa che viene aggiunta al nome del token dei token nascosti nella vista del GM",
+    "Settings.ShowOnActorDirectoryN": "Mostra nella scheda Personaggi",
+    "Settings.ShowOnActorDirectoryH": "Se abilitato, il pulsante mostra/nascondi apparirà accanto ai personaggi nella scheda Personaggi"
+   }
 }
