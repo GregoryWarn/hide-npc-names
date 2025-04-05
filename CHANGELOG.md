@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0
+
+* Added Token Action HUD support
+* Fixed a bug when Show on Actors Tab was disabled
+
 ## 0.7.0
 
 * The replacement state and toggling is now done globally based on the base actor i.e. it is no longer possible to toggle individual tokens
