@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.2
+
+* Fixed error on players when creating a new chat message
+
 ## 0.8.1
 
 * Fixed Token Action HUD error
