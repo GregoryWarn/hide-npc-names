@@ -156,6 +156,8 @@ export class HideNPCNames {
      * @param {*} userId
      */
     static async onCreateChatMessage(message, options, userId) {
+        if (!game.user.isGM) return;
+
         //An unfortunate hack required because of the way we override the name property
         //When we create a new message, we need to remove the hidden suffix from the alias otherwise that is what the unhidden name will be on the chat card
 
