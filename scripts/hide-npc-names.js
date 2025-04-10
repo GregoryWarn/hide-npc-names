@@ -165,7 +165,7 @@ export class HideNPCNames {
         let token = message.speaker.token && message.speaker.scene ? game.scenes.get(message.speaker.scene).tokens.get(message.speaker.token) : null;
 
         //Get the default alias for the speaker
-        let baseAlias = token.__name ?? game.actors.get(message.speaker.actor).name;
+        let baseAlias = token?.__name ?? game.actors.get(message.speaker.actor).name;
 
         //Find the string in the current alias of the baseAlias + the hiddenSuffix and remove the hidden suffix
         let hiddenSuffix = Utils.getSetting(SETTING_KEYS.tokenHiddenSuffix);
