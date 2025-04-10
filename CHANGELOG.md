@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.3
+
+* Fixed an error when creating a chat message without a token
+
 ## 0.8.2
 
 * Fixed error on players when creating a new chat message
