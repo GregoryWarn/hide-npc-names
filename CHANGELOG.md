@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.4
+
+Changing the show on tab option no longer requires a reload
+
 ## 0.8.3
 
 * Fixed an error when creating a chat message without a token
