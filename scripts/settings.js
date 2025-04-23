@@ -60,7 +60,9 @@ export function registerSettings() {
         type: Boolean,
         default: MODULE_CONFIG.DEFAULT_CONFIG.showOnActorDirectory,
         config: true,
-        requiresReload: true
+        onChange: s => {
+            ui.actors.render(true);
+        }
     });
 
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hostileNameReplacement, {
