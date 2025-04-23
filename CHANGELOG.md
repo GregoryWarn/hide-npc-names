@@ -2,7 +2,7 @@
 
 ## 0.8.4
 
-Changing the show on tab option no longer requires a reload
+* Changing the show on tab option no longer requires a reload
 
 ## 0.8.3
 
