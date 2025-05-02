@@ -41,7 +41,7 @@ export class HideNPCNames {
      * @param {*} entity
      */
     static updateEntityMessages(entity) {
-        const isToken = entity instanceof Token || entity instanceof TokenDocument;
+        const isToken = entity instanceof foundry.canvas.placeables.Token || entity instanceof TokenDocument;
 
         const messages = game.messages.contents.filter(m => m.logged && m.speaker?.[isToken ? "token" : "actor"] === entity.id);
         for (const message of messages) {
@@ -105,7 +105,7 @@ export class HideNPCNames {
         if (!npcs.length) return;
 
         //For each replacement, find the matching element and replace
-        const combatantListElement = html.find("li");
+        const combatantListElement = html.querySelectorAll("li");
 
         for (const el of combatantListElement) {
             const combatantId = el.dataset.combatantId;
@@ -115,9 +115,12 @@ export class HideNPCNames {
             if (!npc) continue;
 
             if (game.user.isGM || npc.isOwner) {
-                const $icon = this.getHideIconHtml(npc);
-                $(el).find(".token-name").children().first().append($icon);
-                $icon.on("click", (event) => this.toggleActorHidden(npc.actor));
+                const icon = this.getHideIconHtml(npc);
+                icon.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    this.toggleActorHidden(npc.actor)
+                });
+                el.querySelector(".token-name").firstElementChild.appendChild(icon);
             }
         }
     }
@@ -131,19 +134,19 @@ export class HideNPCNames {
         if (!Utils.getSetting(SETTING_KEYS.showOnActorDirectory)) return;
 
         //For each replacement, find the matching element and replace
-        const actorListElement = html.find("li");
+        const actorListElement = html.querySelectorAll("li");
         for (const el of actorListElement) {
-            const documentId = el.dataset.documentId;
-            if (documentId) {
-                const actor = game.actors.get(documentId);
+            const entryId = el.dataset.entryId;
+            if (entryId) {
+                const actor = game.actors.get(entryId);
                 if (actor && !actor.hasPlayerOwner && (game.user.isGM || actor.isOwner)) {
                     const replacementInfo = HideNPCNames.getReplacementInfo(actor, actor.name);
-                    const $icon = this.getHideIconHtml(replacementInfo);
-                    $(el).find(".document-name").children().first().append($icon);
-                    $icon.on("click", async (event) => {
+                    const icon = this.getHideIconHtml(replacementInfo);
+                    icon.addEventListener("click", async (event) => {
                         event.stopPropagation();
                         await this.toggleActorHidden(actor);
                     });
+                    el.querySelector(".entry-name").appendChild(icon);
                 }
             }
         }
@@ -181,7 +184,7 @@ export class HideNPCNames {
      * @param {*} html
      * @param {*} data
      */
-    static async onRenderChatMessage(message, html, data) {
+    static async onRenderChatMessageHTML(message, html, data) {
         const speaker = message.speaker;
         const name = data?.alias ?? speaker?.alias;
         if (!name || !speaker) return;
@@ -193,10 +196,11 @@ export class HideNPCNames {
 
         // If we are the GM or the actor's owner, simply apply the icon to the name and return
         if (game.user.isGM || actor.isOwner) {
-            const senderName = html.find("header").children().first();
-            const $icon = this.getHideIconHtml(replacementInfo);
-            $icon.on("click", (event) => this.onClickChatMessageIcon(event));
-            return senderName.append($icon);
+            const senderName = html.querySelector("header").firstElementChild;
+            const icon = this.getHideIconHtml(replacementInfo);
+            icon.addEventListener("click", (event) => this.onClickChatMessageIcon(event));
+            senderName.appendChild(icon);
+            return;
         }
 
         if (!replacementInfo.shouldReplace) return;
@@ -224,7 +228,7 @@ export class HideNPCNames {
         const pattern = new RegExp(regex, "gim");
 
         // Do a replacement on the document
-        [html[0],...html[0].querySelectorAll("*:not(script):not(noscript):not(style)")]
+        [html,...html.querySelectorAll("*:not(script):not(noscript):not(style)")]
         .forEach(({childNodes: [...nodes]}) => nodes
         .filter(({nodeType}) => nodeType === document.TEXT_NODE)
         .forEach((textNode) => textNode.textContent = textNode.textContent.replace(pattern, replacementInfo.replacementName)));
@@ -244,18 +248,15 @@ export class HideNPCNames {
         const shouldReplace = HideNPCNames.shouldReplaceName(actor);
         if (actor.hasPlayerOwner || !shouldReplace) return;
 
-        const windowTitle = html.find(".window-title");
+        const windowTitle = html.querySelector(".window-title");
         if (windowTitle.length === 0) return;
 
         const replacement = HideNPCNames.getReplacementName(actor);
         if (!game.user.isGM || !actor.isOwner) {
-            windowTitle.text(replacement);
-            const imgDiv = html.find("div.lightbox-image");
-            if (!imgDiv.length) return;
-            imgDiv.attr("title", replacement);
+            windowTitle.textContent = replacement;
         } else {
             const icon = `<span> <i class="fas fa-mask" title="${replacement}"></i></span>`;
-            windowTitle.append(icon);
+            windowTitle.insertAdjacentHTML("beforeend", icon);
         }
     }
 
@@ -285,10 +286,10 @@ export class HideNPCNames {
 
         if (Utils.getSetting(SETTING_KEYS.showOnActorDirectory)) {
             replacementInfo = HideNPCNames.getReplacementInfo(baseActor);
-            let selector = `[data-document-id="${baseActor.id.toString()}"]`;
-            this.swapIcon(replacementInfo, ui.actors._element[0].querySelector(selector));
+            let selector = `[data-entry-id="${baseActor.id.toString()}"]`;
+            this.swapIcon(replacementInfo, ui.actors.element.querySelector(selector));
             if (ui.actors._popout) {
-                this.swapIcon(replacementInfo, ui.actors._popout._element[0].querySelector(selector));
+                this.swapIcon(replacementInfo, ui.actors._popout.element.querySelector(selector));
             }
         }
     }
@@ -357,11 +358,11 @@ export class HideNPCNames {
             ? `${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenPrefix`)} ${replacementName} ${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenSuffix`)}`
             : game.i18n.localize(`HNN.MessageIcon.Title.NameNotHidden`)}`;
 
-        const $icon = $(
-            `<a class="hide-name"><span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
-            ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span></a>`
-        );
-        return $icon;
+        const icon = document.createElement("a");
+        icon.classList.add("hide-name");
+        icon.innerHTML = `<span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
+        ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span>`;
+        return icon;
     }
 
     /**

@@ -78,14 +78,13 @@ export class HooksManager {
             HideNPCNames.onCreateChatMessage(message, options, userId);
         });
 
-        Hooks.on("renderChatMessage", (app, html, data) => {
+        Hooks.on("renderChatMessageHTML", (app, html, data) => {
             if (game.system.id == "dnd5e") return;
-            HideNPCNames.onRenderChatMessage(app, html, data);
+            HideNPCNames.onRenderChatMessageHTML(app, html, data);
         });
 
         Hooks.on("dnd5e.renderChatMessage", (message, html) => {
-            html = $(html);
-            HideNPCNames.onRenderChatMessage(message, html);
+            HideNPCNames.onRenderChatMessageHTML(message, html);
         });
 
         Hooks.on("renderCombatTracker", (app, html, data) => {
