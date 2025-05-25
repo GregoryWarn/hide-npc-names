@@ -65,21 +65,36 @@ export class HideNPCNames {
         if (!game.user.isGM || app.object.hasPlayerOwner) return;
 
         const appEl = html[0].tagName.toLowerCase() == "form" ? html[0].closest("div.app") : html[0];
-        const existingButton = appEl.querySelector("a.cub-hide-name");
+        const existingButton = appEl.querySelector("a.hide-name");
         if (existingButton) return;
 
         const buttonEl = document.createElement("a");
-        buttonEl?.classList.add("cub-hide-name");
+        buttonEl?.classList.add("hide-name");
         buttonEl?.setAttribute("style", "flex: 0; margin: 0");
         buttonEl?.setAttribute("title", game.i18n.localize("HNN.ActorSheetButton"));
         buttonEl?.addEventListener("click", (event) => { new ActorForm(app.object).render(true); });
 
         const iconEl = document.createElement("i");
-        iconEl?.classList.add("fas", "fa-mask");
+        iconEl?.classList.add("fas", "fa-mask", "hide-icon");
         if (iconEl) buttonEl?.append(iconEl);
 
         const headerEl = appEl?.querySelector("header.window-header");
         headerEl?.prepend(buttonEl);
+    }
+
+    /**
+     * Update the actor sheet header
+     */
+    static onGetHeaderControlsBaseActorSheet(app, controls) {
+        if (!game.user.isGM || app.actor.hasPlayerOwner) return;
+
+        app.options.actions["showHideNamesForm"] = function (event, button) { new ActorForm(app.actor).render(true); };
+        controls.push({
+            action: "showHideNamesForm",
+            label: game.i18n.localize("HNN.ActorForm.Title"),
+            icon: "fas fa-mask",
+            ownership:"OWNER"
+        });
     }
 
     /**
@@ -120,6 +135,7 @@ export class HideNPCNames {
                     event.stopPropagation();
                     this.toggleActorHidden(npc.actor)
                 });
+                //senderName.insertBefore(icon, senderName.firstChild);
                 el.querySelector(".token-name").firstElementChild.appendChild(icon);
             }
         }
@@ -199,7 +215,7 @@ export class HideNPCNames {
             const senderName = html.querySelector("header").firstElementChild;
             const icon = this.getHideIconHtml(replacementInfo);
             icon.addEventListener("click", (event) => this.onClickChatMessageIcon(event));
-            senderName.appendChild(icon);
+            senderName.insertBefore(icon, senderName.firstChild);
             return;
         }
 
@@ -360,7 +376,7 @@ export class HideNPCNames {
 
         const icon = document.createElement("a");
         icon.classList.add("hide-name");
-        icon.innerHTML = `<span class="fa-stack fa-1x" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
+        icon.innerHTML = `<span class="fa-stack fa-1x hide-icon" title="${title}"><i class="fas fa-mask fa-stack-1x"></i>
         ${!shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span>`;
         return icon;
     }

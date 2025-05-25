@@ -74,6 +74,10 @@ export class HooksManager {
             HideNPCNames.onRenderActorSheet(app, html, data);
         });
 
+        Hooks.on("getHeaderControlsBaseActorSheet", (app, controls) => {
+            HideNPCNames.onGetHeaderControlsBaseActorSheet(app, controls);
+        });
+
         Hooks.on("createChatMessage", (message, options, userId) => {
             HideNPCNames.onCreateChatMessage(message, options, userId);
         });

@@ -59,7 +59,7 @@ export class Utils {
     static async loadTemplates() {
         const templates = [
         ];
-        await loadTemplates(templates)
+        await foundry.applications.handlebars.loadTemplates(templates)
     }
 
     static showNotification(type, message, options) {
