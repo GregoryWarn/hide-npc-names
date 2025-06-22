@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+* Fixed an error when creating a chat message with no token or actor
+
+## 1.0.1
+
+* Fixed missing css file in the release
+
 ## 1.0.0
 
 * Updated to v13
