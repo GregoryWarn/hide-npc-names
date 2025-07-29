@@ -220,7 +220,7 @@ export class HideNPCNames {
             return;
         }
 
-        if (!replacementInfo.shouldReplace) return;
+        const nameToUse = replacementInfo.shouldReplace ? replacementInfo.replacementName : replacementInfo.displayName;
 
         const hideParts = Utils.getSetting(SETTING_KEYS.hideParts);
         let matchString = null;
@@ -248,7 +248,7 @@ export class HideNPCNames {
         [html,...html.querySelectorAll("*:not(script):not(noscript):not(style)")]
         .forEach(({childNodes: [...nodes]}) => nodes
         .filter(({nodeType}) => nodeType === document.TEXT_NODE)
-        .forEach((textNode) => textNode.textContent = textNode.textContent.replace(pattern, replacementInfo.replacementName)));
+        .forEach((textNode) => textNode.textContent = textNode.textContent.replace(pattern, nameToUse)));
     }
 
     /**
@@ -355,7 +355,7 @@ export class HideNPCNames {
      */
     static getReplacementInfo(actor, defaultName) {
         let returnObject = {
-            displayName: defaultName ?? actor.name,
+            displayName: defaultName ?? actor.token?.name ?? actor.name,
             replacementName: HideNPCNames.getReplacementName(actor),
             shouldReplace: HideNPCNames.shouldReplaceName(actor)
         };

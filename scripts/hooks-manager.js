@@ -18,6 +18,7 @@ export class HooksManager {
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(CONFIG.Combatant.documentClass.prototype, "name", {
                 get: function () {
+                    if (this.__name == undefined) { return undefined; } //If we haven't set __name yet, return undefined or it will mess with some checks
                     return this.token?.actor ? HideNPCNames.getReplacementInfo(this.token.actor, this.__name).displayName : this.__name;
                 },
                 set: function (name) {
@@ -28,6 +29,7 @@ export class HooksManager {
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(CONFIG.Token.documentClass.prototype, "name", {
                 get: function () {
+                    if (this.__name == undefined) { return undefined; } //If we haven't set __name yet, return undefined or it will mess with some checks
                     if(!this.actor) return this.__name;
                     let replacementInfo = HideNPCNames.getReplacementInfo(this.actor, this.__name);
                     let retVal = replacementInfo.displayName;
@@ -45,6 +47,7 @@ export class HooksManager {
             Object.defineProperty(foundry.data.PrototypeToken.prototype, "__name", { value: "", writable: true });
             Object.defineProperty(foundry.data.PrototypeToken.prototype, "name", {
                 get: function () {
+                    if (this.__name == undefined) { return undefined; } //If we haven't set __name yet, return undefined or it will mess with some checks
                     return HideNPCNames.getReplacementInfo(this.actor, this.__name).displayName;
                 },
                 set: function (name) {
