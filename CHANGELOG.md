@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+* Fixed a couple bugs around prepend/append names
+
 ## 1.0.2
 
 * Fixed an error when creating a chat message with no token or actor
