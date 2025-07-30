@@ -65,6 +65,15 @@ export function registerSettings() {
         }
     });
 
+    Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.showOnTokenHUD, {
+        name: "HNN.Settings.ShowOnTokenHUDN",
+        hint: "HNN.Settings.ShowOnTokenHUDH",
+        scope: "world",
+        type: Boolean,
+        default: MODULE_CONFIG.DEFAULT_CONFIG.showOnTokenHUD,
+        config: true,
+    });
+
     Utils.registerSetting(MODULE_CONFIG.SETTING_KEYS.hostileNameReplacement, {
         name: "HNN.Settings.HostileReplacementN",
         hint: "HNN.Settings.HostileReplacementH",

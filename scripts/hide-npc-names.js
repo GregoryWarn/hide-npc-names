@@ -174,6 +174,8 @@ export class HideNPCNames {
      * @param {Object} html - html object
      */
     static async onRenderTokenHUD(app, html, data, options) {
+        if (!Utils.getSetting(SETTING_KEYS.showOnTokenHUD)) return;
+
         let actor = game.actors.get(app.object.document.actorId);
         if (!actor || actor.hasPlayerOwner) return;
 

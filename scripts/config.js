@@ -19,7 +19,8 @@ export const DEFAULT_CONFIG = {
     nameReplacement: "HNN.Defaults.UnknownCreature",
     tokenHiddenSuffix: "HNN.Defaults.TokenNameHiddenSuffix",
     hideParts: true,
-    showOnActorDirectory: false,
+    showOnActorDirectory: true,
+    showOnTokenHUD: true,
 }
 
 export const FLAGS = {
@@ -38,6 +39,7 @@ export const SETTING_KEYS = {
     secretNameReplacement: "secretNameReplacement",
     tokenHiddenSuffix: "tokenHiddenSuffix",
     hideParts: "hideParts",
-    showOnActorDirectory: "showOnActorDirectory"
+    showOnActorDirectory: "showOnActorDirectory",
+    showOnTokenHUD: "showOnTokenHUD",
 }
 

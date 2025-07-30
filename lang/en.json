@@ -48,6 +48,8 @@
     "Settings.TokenNameHiddenSuffixN": "Token Name Hidden Suffix",
     "Settings.TokenNameHiddenSuffixH": "The string that gets appended to the token name of hidden tokens in the GM's view",
     "Settings.ShowOnActorDirectoryN": "Show on Actors Tab",
-    "Settings.ShowOnActorDirectoryH": "When enabled, the show/hide button will appear next to actors in the Actors Tab"
+    "Settings.ShowOnActorDirectoryH": "When enabled, the show/hide button will appear next to actors in the Actors Tab",
+    "Settings.ShowOnTokenHUDN": "Show on Token HUD",
+    "Settings.ShowOnTokenHUDH": "When enabled, the show/hide button will appear in the Token HUD (right click menu)"
   }
 }
