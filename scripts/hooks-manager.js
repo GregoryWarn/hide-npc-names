@@ -102,6 +102,10 @@ export class HooksManager {
             HideNPCNames.onRenderActorDirectory(app, html);
         });
 
+        Hooks.on('renderTokenHUD', (app, html, data, options) => {
+            HideNPCNames.onRenderTokenHUD(app, html, data, options);
+        });
+
         /* -------------------------------------------- */
         /*              Token Action HUD                */
         /* -------------------------------------------- */

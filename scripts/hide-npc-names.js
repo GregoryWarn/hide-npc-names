@@ -100,7 +100,7 @@ export class HideNPCNames {
     /**
      * Hooks on the Combat Tracker render to replace the names
      * @param {Object} app - the Application instance
-     * @param {Object} html - jQuery html object
+     * @param {Object} html - html object
      */
     static onRenderCombatTracker(app, html, data) {
         // find the NPC combatants
@@ -133,7 +133,7 @@ export class HideNPCNames {
                 const icon = this.getHideIconHtml(npc);
                 icon.addEventListener("click", (event) => {
                     event.stopPropagation();
-                    this.toggleActorHidden(npc.actor)
+                    this.toggleActorHidden(npc.actor);
                 });
                 //senderName.insertBefore(icon, senderName.firstChild);
                 el.querySelector(".token-name").firstElementChild.appendChild(icon);
@@ -144,7 +144,7 @@ export class HideNPCNames {
     /**
      * Hooks on the Actor Directory render to add the reveal button
      * @param {Object} app - the Application instance
-     * @param {Object} html - jQuery html object
+     * @param {Object} html - html object
      */
     static async onRenderActorDirectory(app, html) {
         if (!Utils.getSetting(SETTING_KEYS.showOnActorDirectory)) return;
@@ -166,6 +166,40 @@ export class HideNPCNames {
                 }
             }
         }
+    }
+
+    /**
+     * Hooks on the render of the token hud to add a new button
+     * @param {Object} app - the Application instance
+     * @param {Object} html - html object
+     */
+    static async onRenderTokenHUD(app, html, data, options) {
+        let actor = game.actors.get(app.object.document.actorId);
+        if (!actor || actor.hasPlayerOwner) return;
+
+        if (!game.user.isGM && !actor.isOwner) {
+            return;
+        }
+
+        const replacementInfo = HideNPCNames.getReplacementInfo(actor, actor.name);
+
+        const hideButton = document.createElement("button");
+        hideButton.classList.add("control-icon");
+        hideButton.type = "button";
+        hideButton.dataset.action ="toggleActorHidden";
+        hideButton.dataset.tooltip = `${replacementInfo.shouldReplace
+            ? `${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenPrefix`)} ${replacementInfo.replacementName} ${game.i18n.localize(`HNN.MessageIcon.Title.NameHiddenSuffix`)}`
+            : game.i18n.localize(`HNN.MessageIcon.Title.NameNotHidden`)}`;
+
+        const icon = document.createElement("span");
+        icon.innerHTML = `<span class="fa-stack fa-1x hide-icon"><i class="fas fa-mask fa-stack-1x"></i>
+        ${!replacementInfo.shouldReplace ? `<i class="fas fa-slash fa-stack-1x"></i>` : ""}</span>`;
+
+        hideButton.appendChild(icon);
+        const configButton = html.querySelector("[data-action='config']")
+        configButton.parentNode.insertBefore(hideButton, configButton);
+
+        app.options.actions["toggleActorHidden"] = () => this.toggleActorHidden(actor);
     }
 
     /**
