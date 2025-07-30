@@ -48,6 +48,8 @@
     "Settings.TokenNameHiddenSuffixN": "Suffisso nascosto del nome del token",
     "Settings.TokenNameHiddenSuffixH": "La stringa che viene aggiunta al nome del token dei token nascosti nella vista del GM",
     "Settings.ShowOnActorDirectoryN": "Mostra nella scheda Personaggi",
-    "Settings.ShowOnActorDirectoryH": "Se abilitato, il pulsante mostra/nascondi apparirà accanto ai personaggi nella scheda Personaggi"
+    "Settings.ShowOnActorDirectoryH": "Se abilitato, il pulsante mostra/nascondi apparirà accanto ai personaggi nella scheda Personaggi",
+    "Settings.ShowOnTokenHUDN": "Mostra su Token HUD",
+    "Settings.ShowOnTokenHUDH": "Se abilitato, il pulsante mostra/nascondi apparirà nell'HUD del token (menu del tasto destro)"
    }
 }
