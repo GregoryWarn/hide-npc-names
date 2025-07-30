@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+* Updated Italian localization (GregoryWarn)
+
 ## 1.1.0
 
 * Added a show/hide button to the Token HUD
