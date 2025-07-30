@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+* Added a show/hide button to the Token HUD
+
 ## 1.0.3
 
 * Fixed a couple bugs around prepend/append names
