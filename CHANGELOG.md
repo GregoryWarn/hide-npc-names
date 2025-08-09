@@ -2,7 +2,7 @@
 
 ## 1.1.2
 
-Reworked the GM token name drawing so that it doesn't actually change the name for the GM
+* Reworked the GM token name drawing so that it doesn't actually change the name for the GM
 
 ## 1.1.1
 
