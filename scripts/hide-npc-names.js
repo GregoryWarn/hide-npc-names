@@ -19,8 +19,20 @@ export class HideNPCNames {
     }
 
     /**
-     * Update Token handler
+     * Refresh Token handler
      * @param {*} token
+     */
+    static onRefreshToken(token) {
+        if (game.user.isGM && HideNPCNames.shouldReplaceName(token.actor)) {
+            let hiddenSuffix = Utils.getSetting(SETTING_KEYS.tokenHiddenSuffix);
+            token.nameplate.text = token.name + " " + hiddenSuffix;
+            token.nameplate.style = token._getTextStyle();
+        }
+    }
+
+    /**
+     * Update Token handler
+     * @param {*} tokenDocument
      * @param {*} update
      * @param {*} options
      * @param {*} user
